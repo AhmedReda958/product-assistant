@@ -251,7 +251,7 @@ function formatProductCard(product: Product): string {
 
 ${description}
 
-[🔗 View Product Details](${productUrl})
+[🔗 View Product Details](${productUrl}) | [🛒 Add to Cart](#add-to-cart-${product.id})
 
 ---
 `;

@@ -20,6 +20,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { NavUser } from "@/components/nav-user";
+import { CartDrawer } from "@/components/cart-drawer";
 import { MessageCircle, SquarePen, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import type { ComponentProps } from "react";
@@ -44,22 +45,25 @@ export function SidebarApp({ ...props }: ComponentProps<typeof Sidebar>) {
             </div>
             <span className="text-lg font-semibold">Product Assistant</span>
           </div>
-          {/* New Chat Button */}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button size="icon" variant="ghost" asChild>
-                  <Link href="/chat">
-                    <SquarePen className="h-5 w-5" />
-                    <span className="sr-only">New Chat</span>
-                  </Link>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>New Chat</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2">
+            <CartDrawer />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="icon" variant="ghost" asChild>
+                    <Link href="/chat">
+                      <SquarePen className="h-5 w-5" />
+                      <span className="sr-only">New Chat</span>
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>New Chat</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </div>
       </SidebarHeader>
       <SidebarContent>

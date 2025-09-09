@@ -1,3 +1,6 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +17,9 @@ import { Chat } from "@/components/chat";
 import { SidebarApp } from "@/components/sidebar-app";
 
 export default function Page() {
+  const searchParams = useSearchParams();
+  const message = searchParams.get("message");
+
   return (
     <SidebarProvider>
       <SidebarApp />
@@ -33,7 +39,7 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
-        <Chat />
+        <Chat initialMessage={message} />
       </SidebarInset>
     </SidebarProvider>
   );

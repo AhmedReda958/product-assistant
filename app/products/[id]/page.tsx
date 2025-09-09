@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { SidebarApp } from "@/components/sidebar-app";
+import { useCart } from "@/contexts/cart-context";
 
 interface Product {
   id: number;
@@ -54,6 +55,7 @@ interface RelatedProduct {
 export default function ProductPage() {
   const params = useParams();
   const router = useRouter();
+  const { addItem } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -131,6 +133,21 @@ export default function ProductPage() {
     } else {
       // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (product) {
+      addItem({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.images[0] || "/placeholder-product.jpg",
+        category: {
+          id: product.category.id,
+          name: product.category.name,
+        },
+      });
     }
   };
 
@@ -234,6 +251,7 @@ export default function ProductPage() {
                       const target = e.target as HTMLImageElement;
                       target.src = "/placeholder-product.jpg";
                     }}
+                    unoptimized={true}
                   />
                 </div>
 
@@ -255,6 +273,7 @@ export default function ProductPage() {
                           alt={`${product.title} ${index + 1}`}
                           fill
                           className="object-cover"
+                          unoptimized={true}
                         />
                       </button>
                     ))}
@@ -297,7 +316,11 @@ export default function ProductPage() {
                 </div>
 
                 <div className="flex space-x-4">
-                  <Button size="lg" className="flex-1">
+                  <Button
+                    size="lg"
+                    className="flex-1"
+                    onClick={handleAddToCart}
+                  >
                     <ShoppingCart className="h-4 w-4 mr-2" />
                     Add to Cart
                   </Button>
@@ -358,6 +381,7 @@ export default function ProductPage() {
                           alt={relatedProduct.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-200"
+                          unoptimized={true}
                         />
                       </div>
                       <CardHeader className="pb-2">

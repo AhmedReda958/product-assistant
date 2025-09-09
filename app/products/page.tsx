@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { SidebarApp } from "@/components/sidebar-app";
+import { useCart } from "@/contexts/cart-context";
 
 interface Product {
   id: number;
@@ -44,6 +45,7 @@ interface Category {
 
 export default function ProductsPage() {
   const router = useRouter();
+  const { addItem } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -115,6 +117,19 @@ export default function ProductsPage() {
     setSearchTerm("");
     setSelectedCategory("");
     setPriceRange({ min: "", max: "" });
+  };
+
+  const handleAddToCart = (product: Product) => {
+    addItem({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.images[0] || "/placeholder-product.jpg",
+      category: {
+        id: product.category.id,
+        name: product.category.name,
+      },
+    });
   };
 
   if (loading) {
@@ -295,6 +310,7 @@ export default function ProductsPage() {
                           const target = e.target as HTMLImageElement;
                           target.src = "/placeholder-product.jpg";
                         }}
+                        unoptimized={true}
                       />
                     </div>
                     <CardHeader className="pb-2">
@@ -318,7 +334,7 @@ export default function ProductsPage() {
                         className="w-full flex items-center gap-2"
                         onClick={(e) => {
                           e.stopPropagation();
-                          // Handle add to cart logic here
+                          handleAddToCart(product);
                         }}
                       >
                         <ShoppingCart className="h-4 w-4" />
