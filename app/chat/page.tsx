@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,7 +17,7 @@ import {
 import { Chat } from "@/components/chat";
 import { SidebarApp } from "@/components/sidebar-app";
 
-export default function Page() {
+function ChatPageContent() {
   const searchParams = useSearchParams();
   const message = searchParams.get("message");
 
@@ -42,5 +43,13 @@ export default function Page() {
         <Chat initialMessage={message} />
       </SidebarInset>
     </SidebarProvider>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChatPageContent />
+    </Suspense>
   );
 }
