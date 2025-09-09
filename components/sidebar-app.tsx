@@ -48,7 +48,7 @@ export function SidebarApp({ ...props }: ComponentProps<typeof Sidebar>) {
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
             <CartDrawer />
-            <TooltipProvider>
+            {/* <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button size="icon" variant="ghost" asChild>
@@ -62,7 +62,7 @@ export function SidebarApp({ ...props }: ComponentProps<typeof Sidebar>) {
                   <p>New Chat</p>
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider>
+            </TooltipProvider> */}
           </div>
         </div>
       </SidebarHeader>
