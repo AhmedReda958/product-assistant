@@ -47,9 +47,11 @@ export function SidebarApp({ ...props }: ComponentProps<typeof Sidebar>) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size="icon" variant="ghost">
-                  <SquarePen className="h-5 w-5" />
-                  <span className="sr-only">New Chat</span>
+                <Button size="icon" variant="ghost" asChild>
+                  <a href="/chat">
+                    <SquarePen className="h-5 w-5" />
+                    <span className="sr-only">New Chat</span>
+                  </a>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
