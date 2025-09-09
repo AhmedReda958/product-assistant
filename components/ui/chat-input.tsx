@@ -173,12 +173,15 @@ function ChatInputSubmit({
   }
 
   const isDisabled =
-    typeof context.value !== "string" || context.value.trim().length === 0;
+    typeof context.value !== "string" ||
+    context.value.trim().length === 0 ||
+    loading;
 
   return (
     <Button
       className={cn(
         "shrink-0 rounded-full p-1.5 h-fit border dark:border-zinc-600",
+        loading && "animate-pulse",
         className
       )}
       disabled={isDisabled}
