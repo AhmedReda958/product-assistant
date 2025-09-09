@@ -4,6 +4,7 @@ import type * as React from "react";
 import { Suspense, isValidElement, memo, useMemo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import DOMPurify from "isomorphic-dompurify";
 
 const DEFAULT_PRE_BLOCK_CLASS =
   "my-4 overflow-x-auto w-fit rounded-xl bg-zinc-950 text-zinc-50 dark:bg-zinc-900 border border-border p-4";
@@ -16,9 +17,28 @@ const extractTextContent = (node: React.ReactNode): string => {
     return node.map(extractTextContent).join("");
   }
   if (isValidElement(node)) {
-    return extractTextContent(node.props.children);
+    return extractTextContent((node as any).props.children);
   }
   return "";
+};
+
+// Function to detect if content contains HTML
+const containsHTML = (content: string): boolean => {
+  return /<[^>]*>/g.test(content);
+};
+
+// Function to safely sanitize and render HTML
+const renderHTML = (content: string): string => {
+  // Only allow specific HTML tags for product cards
+  const allowedTags = ["div", "img", "h3", "p", "span"];
+  const allowedAttributes = ["class", "style", "src", "alt"];
+
+  return DOMPurify.sanitize(content, {
+    ALLOWED_TAGS: allowedTags,
+    ALLOWED_ATTR: allowedAttributes,
+    ALLOW_DATA_ATTR: false,
+    ALLOW_UNKNOWN_PROTOCOLS: false,
+  });
 };
 
 interface HighlightedPreProps extends React.HTMLAttributes<HTMLPreElement> {
@@ -281,6 +301,18 @@ interface MarkdownBlockProps {
 
 const MemoizedMarkdownBlock = memo(
   ({ content, className }: MarkdownBlockProps) => {
+    // Check if content contains HTML (like product cards)
+    if (containsHTML(content)) {
+      const sanitizedHTML = renderHTML(content);
+      return (
+        <div
+          className={className}
+          dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+        />
+      );
+    }
+
+    // Regular markdown processing
     return (
       <div className={className}>
         <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>

@@ -22,6 +22,7 @@
     "ai": "^5.0.39",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "isomorphic-dompurify": "^2.26.0",
     "lucide-react": "^0.543.0",
     "marked": "^16.2.1",
     "next": "15.5.2",
