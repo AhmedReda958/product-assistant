@@ -16,7 +16,6 @@ import {
   Filter,
   ShoppingCart,
   MessageCircle,
-  HelpCircle,
   Sparkles,
 } from "lucide-react";
 import { useRouter } from "next/navigation";

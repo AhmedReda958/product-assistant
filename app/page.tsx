@@ -3,7 +3,6 @@ import { SidebarApp } from "@/components/sidebar-app";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -60,7 +59,7 @@ export default function Home() {
                   <CardTitle>Smart Search</CardTitle>
                   <CardDescription>
                     Find products quickly with our intelligent search that
-                    understands what you're looking for.
+                    understands what you&apos;re looking for.
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -95,7 +94,7 @@ export default function Home() {
             {/* CTA Section */}
             <div className="bg-white rounded-lg shadow-sm p-8 text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Can't find what you're looking for?
+                Can&apos;t find what you&apos;re looking for?
               </h2>
               <p className="text-gray-600 mb-6">
                 Our AI assistant can help you find the perfect product or answer

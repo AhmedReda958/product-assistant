@@ -5,6 +5,7 @@ import { Suspense, isValidElement, memo, useMemo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import DOMPurify from "isomorphic-dompurify";
+import Image from "next/image";
 
 const DEFAULT_PRE_BLOCK_CLASS =
   "my-4 overflow-x-auto w-fit rounded-xl bg-zinc-950 text-zinc-50 dark:bg-zinc-900 border border-border p-4";
@@ -17,7 +18,10 @@ const extractTextContent = (node: React.ReactNode): string => {
     return node.map(extractTextContent).join("");
   }
   if (isValidElement(node)) {
-    return extractTextContent((node as any).props.children);
+    return extractTextContent(
+      (node as React.ReactElement<{ children?: React.ReactNode }>).props
+        .children
+    );
   }
   return "";
 };
@@ -258,11 +262,16 @@ const components: Partial<Components> = {
       {children}
     </td>
   ),
-  img: ({ alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // biome-ignore lint/a11y/useAltText: alt is not required
-    <img className="rounded-md" alt={alt} {...props} />
+  img: ({ alt, src }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <Image
+      src={typeof src === "string" ? src : ""}
+      alt={alt || ""}
+      width={500}
+      height={300}
+      className="rounded-md"
+    />
   ),
-  code: ({ children, node, className, ...props }) => {
+  code: ({ children, className, ...props }) => {
     const match = /language-(\w+)/.exec(className || "");
     if (match) {
       return (
