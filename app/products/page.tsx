@@ -282,14 +282,15 @@ export default function ProductsPage() {
                 {filteredProducts.map((product) => (
                   <Card
                     key={product.id}
-                    className="overflow-hidden hover:shadow-lg transition-shadow group"
+                    className="overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer"
+                    onClick={() => router.push(`/products/${product.id}`)}
                   >
                     <div className="relative h-48 bg-gray-100">
                       <Image
                         src={product.images[0] || "/placeholder-product.jpg"}
                         alt={product.title}
                         fill
-                        className="object-cover"
+                        className="object-cover group-hover:scale-105 transition-transform duration-200"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.src = "/placeholder-product.jpg";
@@ -313,7 +314,13 @@ export default function ProductsPage() {
                       </p>
                     </CardContent>
                     <CardFooter className="pt-2">
-                      <Button className="w-full flex items-center gap-2">
+                      <Button
+                        className="w-full flex items-center gap-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Handle add to cart logic here
+                        }}
+                      >
                         <ShoppingCart className="h-4 w-4" />
                         Add to Cart
                       </Button>

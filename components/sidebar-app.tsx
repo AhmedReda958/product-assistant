@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/tooltip";
 import { NavUser } from "@/components/nav-user";
 import { MessageCircle, SquarePen, ShoppingBag } from "lucide-react";
+import Link from "next/link";
 import type { ComponentProps } from "react";
 
 // This is sample data.
@@ -48,10 +49,10 @@ export function SidebarApp({ ...props }: ComponentProps<typeof Sidebar>) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button size="icon" variant="ghost" asChild>
-                  <a href="/chat">
+                  <Link href="/chat">
                     <SquarePen className="h-5 w-5" />
                     <span className="sr-only">New Chat</span>
-                  </a>
+                  </Link>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -69,18 +70,18 @@ export function SidebarApp({ ...props }: ComponentProps<typeof Sidebar>) {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild className="w-full justify-start">
-                  <a href="/products">
+                  <Link href="/products">
                     <ShoppingBag className="mr-2 h-4 w-4" />
                     Products
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild className="w-full justify-start">
-                  <a href="/chat">
+                  <Link href="/chat">
                     <MessageCircle className="mr-2 h-4 w-4" />
                     Chat Assistant
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

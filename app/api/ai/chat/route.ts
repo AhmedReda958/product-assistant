@@ -234,7 +234,7 @@ function analyzeConversation(messages: ChatMessage[]): {
 
 // Function to format product as markdown card
 function formatProductCard(product: Product): string {
-  const productUrl = `https://api.escuelajs.co/api/v1/products/${product.id}`;
+  const productUrl = `/products/${product.id}`;
   const imageUrl = product.images[0] || "/placeholder-product.jpg";
   const description =
     product.description.length > 100
